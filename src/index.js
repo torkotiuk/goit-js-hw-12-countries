@@ -5,6 +5,7 @@ import { debounce } from 'lodash';
 import contriesListTempl from './templates/contries-list.hbs';
 import contryCardTempl from './templates/contry-card.hbs';
 import './css/country-card.css';
+import fetchAPI from './js/fetchCountries';
 
 const refs = {
   inputSearch: document.querySelector('.input-search'),
@@ -12,30 +13,26 @@ const refs = {
   body: document.querySelector('body'),
 };
 
-// --- API ---
-const BASE_URL = `https://restcountries.eu/rest/v2/name/`;
-
-function fetchCountries(inputData) {
-  console.log('inputData: ', inputData);
-  return fetch(`${BASE_URL}${inputData}`)
-    .then(response => response.json())
-    .catch(catchError);
-}
-// --- --- ---
-
 refs.inputSearch.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(e) {
-  const searchQuery = e.target.value;
+  const searchQuery = e.target.value.trim();
 
   if (searchQuery === '') {
     refs.countriesContainer.innerHTML = '';
+    return;
   }
 
-  fetchCountries(searchQuery).then(countriesArr => {
+  fetchAPI.fetchCountries(searchQuery).then(countriesArr => {
+    if (!countriesArr) {
+      return;
+    }
+
     let countriesArrLength = countriesArr.length;
 
     if (countriesArrLength > 10) {
+      refs.countriesContainer.innerHTML = '';
+
       error({
         text: 'Too many matches found. Please enter a more specific query!',
         delay: 3000,
