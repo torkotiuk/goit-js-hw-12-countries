@@ -19,15 +19,12 @@ function onSearch(e) {
   const searchQuery = e.target.value.trim();
 
   if (searchQuery === '') {
+    catchError();
     refs.countriesContainer.innerHTML = '';
     return;
   }
 
   fetchAPI.fetchCountries(searchQuery).then(countriesArr => {
-    if (!countriesArr) {
-      return;
-    }
-
     let countriesArrLength = countriesArr.length;
 
     if (countriesArrLength > 10) {
@@ -60,6 +57,6 @@ function renderCountryCard(country) {
 function catchError() {
   error({
     text: 'Enter smth to find your country!',
-    delay: 2000,
+    delay: 4000,
   });
 }
