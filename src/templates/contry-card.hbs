@@ -1,30 +1,27 @@
 <div class="card-container">
   {{#each this}}
-<div class="country-container">
-  <h2>{{{name}}}</h2>
-  <ul>
-    <li class="country-list_capital">Capital: {{this.capital}}</li>
-    <li class="country-list_population">Population: {{this.population}}</li>
-    <li class="country-list_languages">Languages: 
+  <div class="country-container">
+    <h2>{{{name}}}</h2>
+    <ul>
+      <li class="list">
+        <b>Capital:</b> <span class="contry-data">{{this.capital}}</span>
+      </li>
+      <li class="list"><b>Population:</b> <span>{{this.population}}</span></li>
+      <li class="list">
+        <b>Languages: </b>
 
-    
-      <ul class="country-list_languages-list">
-         {{#each languages}}
-         <li>
-           {{this.name}}
-          </li>
+        <ul class="country-list_languages-list">
+          {{#each languages}}
+          <li>{{this.name}}</li>
           {{/each}}
-       </ul>
+        </ul>
+      </li>
+    </ul>
+  </div>
 
-    </li>
-  </ul>
-</div>
-
-<div class="flag-container">
-
-  <img class="country-flag" src="{{this.flag}}" alt="Flag of {{name}} width="20%" ">
-
-</div>
-{{/each}}
-
+  <div class="flag-container">
+    <img class="country-flag" src="{{this.flag}}" alt="Flag of {{name}}
+    width="20%" ">
+  </div>
+  {{/each}}
 </div>
